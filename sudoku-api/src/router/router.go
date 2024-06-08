@@ -7,9 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
-// SetupRoutes func
 func SetupRoutes(app *fiber.App) {
-	// Middleware
 	router := app.Group("/api", logger.New())
 
 	Handlers.SetupUserHandlerRoutes(router)

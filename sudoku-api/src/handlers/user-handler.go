@@ -6,7 +6,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// RegisterPayload
 type RegisterPayload struct {
 	Id            int    `json:"id"`
 	Email         string `json:"email"`
@@ -30,6 +29,5 @@ func registerUser(c *fiber.Ctx) error {
 }
 
 func SetupUserHandlerRoutes(router fiber.Router) {
-	// Routes
 	router.Post("/register", registerUser)
 }

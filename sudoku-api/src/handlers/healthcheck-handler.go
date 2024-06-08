@@ -9,6 +9,5 @@ func healthcheck(c *fiber.Ctx) error {
 }
 
 func SetupHealthcheckHandlerRoutes(router fiber.Router) {
-	// Routes
 	router.Get("/healthcheck", healthcheck)
 }
