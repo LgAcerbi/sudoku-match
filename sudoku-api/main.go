@@ -1,17 +1,15 @@
 package main
 
 import (
+	Router "sudoku-api/src/router"
+
 	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
 	app := fiber.New()
 
-	app.Get("/healthcheck", func(c *fiber.Ctx) error {
-		response := "HealthCheck OK!"
-
-		return c.SendString(response)
-	})
+	Router.SetupRoutes(app)
 
 	app.Listen(":3000")
 }

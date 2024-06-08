@@ -1,4 +1,4 @@
-package user_handler
+package handlers
 
 import (
 	"log"
@@ -29,7 +29,7 @@ func registerUser(c *fiber.Ctx) error {
 	return c.JSON(registerPayload)
 }
 
-func SetupRoutes(app *fiber.App) {
+func SetupUserHandlerRoutes(router fiber.Router) {
 	// Routes
-	app.Post("/register", registerUser)
+	router.Post("/register", registerUser)
 }

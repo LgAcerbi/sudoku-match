@@ -13,7 +13,7 @@ func checkResponseCode(t *testing.T, expected, actual int) {
 }
 
 func TestHealthCheck(t *testing.T) {
-	res, err := http.Get("http://localhost:3000/healthcheck")
+	res, err := http.Get("http://localhost:3000/api/healthcheck")
 
 	if err != nil {
 		t.Errorf("Error %s", err.Error())
