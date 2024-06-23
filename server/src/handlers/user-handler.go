@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"fmt"
 	"log"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 
@@ -13,6 +13,15 @@ type RegisterPayload struct {
 	Email         string `json:"email"`
 	GoogleIdToken string `json:"googleIdToken"`
 	Nickname      string `json:"nickname"`
+}
+
+type UserOutput struct {
+	Email     string     `json:"email"`
+	Nickname  string     `json:"nickname"`
+	ID        uint       `json:"id"`
+	CreatedAt time.Time  `json:"createdAt"`
+	UpdatedAt time.Time  `json:"updatedAt"`
+	DeletedAt *time.Time `json:"deletedAt"`
 }
 
 func RegisterUser(c *fiber.Ctx) error {
@@ -52,9 +61,16 @@ func FindUserByEmail(c *fiber.Ctx) error {
 		})
 	}
 
-	fmt.Println(foundUser)
+	response := UserOutput{
+		Nickname:  foundUser.Nickname,
+		Email:     foundUser.Email,
+		ID:        foundUser.ID,
+		CreatedAt: foundUser.CreatedAt,
+		UpdatedAt: foundUser.UpdatedAt,
+		DeletedAt: foundUser.DeletedAt,
+	}
 
-	return c.Status(200).JSON(foundUser)
+	return c.Status(200).JSON(response)
 }
 
 func SetupUserHandlerRoutes(router fiber.Router) {
