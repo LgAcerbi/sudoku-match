@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -14,7 +15,7 @@ type RegisterPayload struct {
 	Nickname      string `json:"nickname"`
 }
 
-func registerUser(c *fiber.Ctx) error {
+func RegisterUser(c *fiber.Ctx) error {
 	registerPayload := new(RegisterPayload)
 
 	if parsePayloadErr := c.BodyParser(registerPayload); parsePayloadErr != nil {
@@ -40,6 +41,23 @@ func registerUser(c *fiber.Ctx) error {
 	})
 }
 
+func FindUserByEmail(c *fiber.Ctx) error {
+	email := c.Params("email")
+
+	foundUser, err := Services.FindUserByEmail(email)
+
+	if err != nil {
+		return c.Status(404).JSON(&fiber.Map{
+			"message": err.Error(),
+		})
+	}
+
+	fmt.Println(foundUser)
+
+	return c.Status(200).JSON(foundUser)
+}
+
 func SetupUserHandlerRoutes(router fiber.Router) {
-	router.Post("/register", registerUser)
+	router.Post("/register", RegisterUser)
+	router.Get("/user/:email", FindUserByEmail)
 }

@@ -26,6 +26,10 @@ func FindUserByEmailOrNicknameOrToken(email string, nickname string, googleIdTok
 
 	dbConnection.Limit(1).Where(&User{Email: email}).Or(&User{Nickname: nickname}).Or(&User{GoogleIdToken: googleIdToken}).Find(&user)
 
+	if user.ID == 0 {
+		return nil
+	}
+
 	return user
 }
 
@@ -33,6 +37,20 @@ func RegisterUser(user User) User {
 	dbConnection := Database.GetOrCreateConnection()
 
 	dbConnection.Create(&user)
+
+	return user
+}
+
+func FindUserByEmail(email string) *User {
+	dbConnection := Database.GetOrCreateConnection()
+
+	var user *User
+
+	dbConnection.First(&user, "email = ?", email)
+
+	if user.ID == 0 {
+		return nil
+	}
 
 	return user
 }

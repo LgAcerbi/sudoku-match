@@ -15,7 +15,7 @@ type RegisterData struct {
 func RegisterUser(registerData RegisterData) (string, error) {
 	foundUser := Model.FindUserByEmailOrNicknameOrToken(registerData.Email, registerData.Nickname, registerData.GoogleIdToken)
 
-	if foundUser.ID != 0 {
+	if foundUser != nil {
 		return "error", errors.New("user with provided data already exists")
 	}
 
@@ -24,4 +24,14 @@ func RegisterUser(registerData RegisterData) (string, error) {
 	Model.RegisterUser(newUser)
 
 	return "user registered", nil
+}
+
+func FindUserByEmail(email string) (*Model.User, error) {
+	foundUser := Model.FindUserByEmail(email)
+
+	if foundUser == nil {
+		return nil, errors.New("user not found")
+	}
+
+	return foundUser, nil
 }
