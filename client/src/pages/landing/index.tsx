@@ -22,7 +22,9 @@ function LandingPage() {
         const foundUser = await SudokuService.findUserByEmail(userGoogleData.email);
 
         if (!foundUser) {
-            // redirect to register nickname page
+            navigate("/register");
+
+            return;
         }
 
         console.log("userGoogleData", userGoogleData);

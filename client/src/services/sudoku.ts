@@ -17,17 +17,9 @@ class SudokuService {
         }
     }
 
-    static async registerUser({
-        nickname,
-        email,
-        googleIdToken,
-    }: {
-        nickname: string;
-        email: string;
-        googleIdToken: string;
-    }) {
+    static async registerUser({ nickname, email }: { nickname: string; email: string }) {
         try {
-            const response = await SudokuAPI.post("/register", { nickname, email, googleIdToken });
+            const response = await SudokuAPI.post("/register", { nickname, email });
 
             return response.data;
         } catch (error) {
