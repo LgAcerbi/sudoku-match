@@ -7,19 +7,18 @@ import (
 )
 
 type RegisterData struct {
-	Email         string
-	GoogleIdToken string
-	Nickname      string
+	Email    string
+	Nickname string
 }
 
 func RegisterUser(registerData RegisterData) (string, error) {
-	foundUser := Model.FindUserByEmailOrNicknameOrToken(registerData.Email, registerData.Nickname, registerData.GoogleIdToken)
+	foundUser := Model.FindUserByEmailOrNickname(registerData.Email, registerData.Nickname)
 
 	if foundUser != nil {
 		return "error", errors.New("user with provided data already exists")
 	}
 
-	newUser := Model.User{GoogleIdToken: registerData.GoogleIdToken, Email: registerData.Email, Nickname: registerData.Nickname, CreatedAt: time.Now(), UpdatedAt: time.Now(), DeletedAt: nil}
+	newUser := Model.User{Email: registerData.Email, Nickname: registerData.Nickname, CreatedAt: time.Now(), UpdatedAt: time.Now(), DeletedAt: nil}
 
 	Model.RegisterUser(newUser)
 

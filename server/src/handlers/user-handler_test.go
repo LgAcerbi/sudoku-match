@@ -13,9 +13,8 @@ func TestRegisterUser(t *testing.T) {
 	baseUrl := "http://localhost:3000"
 
 	body, _ := json.Marshal(map[string]string{
-		"email":         "test@mail.com",
-		"googleIdToken": "some-token",
-		"nickname":      "some-nick-name",
+		"email":    "test@mail.com",
+		"nickname": "some-nick-name",
 	})
 	payload := bytes.NewBuffer(body)
 

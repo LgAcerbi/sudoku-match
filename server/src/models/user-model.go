@@ -6,25 +6,24 @@ import (
 )
 
 type User struct {
-	ID            uint `omit`
-	GoogleIdToken string
-	Email         string
-	Nickname      string
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
-	DeletedAt     *time.Time
+	ID        uint `omit`
+	Email     string
+	Nickname  string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt *time.Time
 }
 
 type Users struct {
 	Users []User
 }
 
-func FindUserByEmailOrNicknameOrToken(email string, nickname string, googleIdToken string) *User {
+func FindUserByEmailOrNickname(email string, nickname string) *User {
 	dbConnection := Database.GetOrCreateConnection()
 
 	var user *User
 
-	dbConnection.Limit(1).Where(&User{Email: email}).Or(&User{Nickname: nickname}).Or(&User{GoogleIdToken: googleIdToken}).Find(&user)
+	dbConnection.Limit(1).Where(&User{Email: email}).Or(&User{Nickname: nickname}).Find(&user)
 
 	if user.ID == 0 {
 		return nil

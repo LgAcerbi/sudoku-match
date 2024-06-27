@@ -10,12 +10,11 @@ import (
 )
 
 type RegisterPayload struct {
-	Email         string `json:"email"`
-	GoogleIdToken string `json:"googleIdToken"`
-	Nickname      string `json:"nickname"`
+	Email    string `json:"email"`
+	Nickname string `json:"nickname"`
 }
 
-type UserOutput struct {
+type User struct {
 	Email     string     `json:"email"`
 	Nickname  string     `json:"nickname"`
 	ID        uint       `json:"id"`
@@ -35,7 +34,7 @@ func RegisterUser(c *fiber.Ctx) error {
 		return nil
 	}
 
-	registerData := Services.RegisterData{Email: registerPayload.Email, GoogleIdToken: registerPayload.GoogleIdToken, Nickname: registerPayload.Nickname}
+	registerData := Services.RegisterData{Email: registerPayload.Email, Nickname: registerPayload.Nickname}
 
 	message, err := Services.RegisterUser(registerData)
 
@@ -61,7 +60,7 @@ func FindUserByEmail(c *fiber.Ctx) error {
 		})
 	}
 
-	response := UserOutput{
+	response := User{
 		Nickname:  foundUser.Nickname,
 		Email:     foundUser.Email,
 		ID:        foundUser.ID,
